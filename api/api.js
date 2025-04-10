@@ -1,5 +1,4 @@
-import { JSDOM } from "jsdom";
-import { Readability } from "@mozilla/readability";
+
 
 export default async function handler(req, res) {
   // CORS headers
