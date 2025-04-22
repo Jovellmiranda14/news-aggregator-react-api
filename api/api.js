@@ -46,7 +46,7 @@ export default async function handler(req, res) {
           url = `${BASE_URL}/everything?q=apple&from=2025-03-31&to=2025-03-31&sortBy=popularity&apiKey=${API_KEY}`;
           break;
         default:
-          url = `${BASE_URL}/everything?q=${encodedTerm}&sortBy=relevancy&apiKey=${API_KEY}`;
+          url = `${BASE_URL}/everything?q=${encodedTerm}&apiKey=${API_KEY}`;
           break;
       }
     }
