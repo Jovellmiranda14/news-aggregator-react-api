@@ -4,14 +4,12 @@ export default async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
   res.setHeader("Access-Control-Allow-Credentials", "true");
-  const limit = response.headers.get("X-RateLimit-Limit");
-  const remaining = response.headers.get("X-RateLimit-Remaining");
+
   if (req.method === "OPTIONS") {
     return res.status(200).end();
   }
 
   if (req.method !== "GET") {
-    res.setHeader("Allow", "GET, OPTIONS");
     return res.status(405).json({ error: "Method Not Allowed" });
   }
 
@@ -51,25 +49,8 @@ export default async function handler(req, res) {
     }
 
     const response = await fetch(url);
-
     if (!response.ok) {
-      const errorText = await response.text();
-
-      if (response.status === 429) {
-        console.warn("⚠️ Rate limit exceeded.");
-        console.log("🔍 Rate limit headers:", {
-          limit: response.headers.get("X-RateLimit-Limit"),
-          remaining: response.headers.get("X-RateLimit-Remaining"),
-          retryAfter: response.headers.get("Retry-After"),
-        });
-
-        return res.status(429).json({
-          error: "Too Many Requests. Please try again later.",
-          retryAfter: response.headers.get("Retry-After") || "unknown",
-        });
-      }
-
-      throw new Error(`Fetch failed with status ${response.status} - ${errorText}`);
+      throw new Error(`Fetch failed with status ${response.status}`);
     }
 
     const data = await response.json();
@@ -80,5 +61,4 @@ export default async function handler(req, res) {
     console.error("❌ Error fetching news:", error.message);
     res.status(500).json({ error: "Failed to fetch news articles" });
   }
-  console.log(`🧮 Limit: ${limit}, Remaining: ${remaining}`);
 }
