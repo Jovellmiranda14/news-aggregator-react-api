@@ -40,7 +40,7 @@ export default async function handler(req, res) {
           url = `${BASE_URL}/top-headlines?country=us&category=business&apiKey=${API_KEY}`;
           break;
         case "tesla":
-          url = `${BASE_URL}/everything?q=tesla&from=2025-03-01&sortBy=publishedAt&apiKey=${API_KEY}`;
+          url = `${BASE_URL}/everything?q=tesla&from=2025-03-23&sortBy=publishedAt&apiKey=${API_KEY}`;
           break;
         case "apple":
           url = `${BASE_URL}/everything?q=apple&from=2025-03-31&to=2025-03-31&sortBy=popularity&apiKey=${API_KEY}`;
