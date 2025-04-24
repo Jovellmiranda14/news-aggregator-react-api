@@ -1,8 +1,3 @@
-const axios = require('axios');
-
-// and we need jsdom and Readability to parse the article HTML
-const { JSDOM } = require('jsdom');
-const { Readability } = require('@mozilla/readability');
 export default async function handler(req, res) {
   // CORS headers
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -52,7 +47,6 @@ export default async function handler(req, res) {
       }
     }
 
-    // Fetch articles from NewsAPI
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error(`Fetch failed with status ${response.status}`);
@@ -61,25 +55,7 @@ export default async function handler(req, res) {
     const data = await response.json();
     const articles = data.articles || [];
 
-    // Fetch full content for each article
-    const fullArticles = await Promise.all(
-      articles.map(async (article) => {
-        try {
-          const articleHtml = await axios.get(article.url); // Get HTML content of the article
-          const dom = new JSDOM(articleHtml.data, { url: article.url });
-          const readableArticle = new Readability(dom.window.document).parse();
-          return {
-            ...article,
-            content: readableArticle.textContent, // Extracted article content
-          };
-        } catch (error) {
-          console.error("Error fetching article content:", error.message);
-          return article; // Return original article if there's an error fetching content
-        }
-      })
-    );
-
-    res.status(200).json({ articles: fullArticles });
+    res.status(200).json({ articles });
   } catch (error) {
     console.error("❌ Error fetching news:", error.message);
     res.status(500).json({ error: "Failed to fetch news articles" });
