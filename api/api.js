@@ -1,7 +1,8 @@
-import axios from "axios";
-import { JSDOM } from "jsdom";
-import { Readability } from "@mozilla/readability";
+const axios = require('axios');
 
+// and we need jsdom and Readability to parse the article HTML
+const { JSDOM } = require('jsdom');
+const { Readability } = require('@mozilla/readability');
 export default async function handler(req, res) {
   // CORS headers
   res.setHeader("Access-Control-Allow-Origin", "*");
