@@ -14,7 +14,7 @@ export default async function handler(req, res) {
   }
 
   const API_KEY =
-    process.env.NEWS_API_KEY || "ea9029c383a84daf85d82e8c680bf37c";
+    process.env.NEWS_API_KEY || "a073098e4ad2499eb63a28c38d088989";
   const { q = "" } = req.query;
 
   try {
