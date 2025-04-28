@@ -10,7 +10,7 @@ export default async function handler(req, res) {
   }
 
   const API_KEY =
-    process.env.NEWS_API_KEY || "a073098e4ad2499eb63a28c38d088989";
+    process.env.NEWS_API_KEY;
   const BASE_URL = process.env.BASE_URL ; // Default base URL
   const { q = "" } = req.query;
 
