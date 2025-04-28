@@ -8,7 +8,10 @@ export default async function handler(req, res) {
   if (req.method !== "GET") {
     return res.status(405).json({ error: "Method Not Allowed" });
   }
-
+  const today = new Date();
+  const lastMonth = new Date(today.setMonth(today.getMonth() - 1))
+    .toISOString()
+    .split("T")[0];
   const API_KEY =
     process.env.NEWS_API_KEY;
   const BASE_URL = process.env.BASE_URL ; // Default base URL
@@ -33,7 +36,7 @@ export default async function handler(req, res) {
           url = `${BASE_URL}/top-headlines?country=us&category=business&apiKey=${API_KEY}`;
           break;
         case "tesla":
-          url = `${BASE_URL}/everything?q=tesla&from=2025-03-23&sortBy=publishedAt&apiKey=${API_KEY}`;
+          url = `${BASE_URL}/everything?q=tesla&from=${lastMonth}&sortBy=publishedAt&apiKey=${API_KEY}`;
           break;
         case "apple":
           url = `${BASE_URL}/everything?q=apple&from=2025-03-31&to=2025-03-31&sortBy=popularity&apiKey=${API_KEY}`;
