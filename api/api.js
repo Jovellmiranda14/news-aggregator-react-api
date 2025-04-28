@@ -12,7 +12,10 @@ export default async function handler(req, res) {
   if (req.method !== "GET") {
     return res.status(405).json({ error: "Method Not Allowed" });
   }
-
+  const today = new Date();
+  const lastMonth = new Date(today.setMonth(today.getMonth() - 1))
+    .toISOString()
+    .split("T")[0];
   const API_KEY =
     process.env.NEWS_API_KEY || "ea9029c383a84daf85d82e8c680bf37c";
   const { q = "" } = req.query;
@@ -36,7 +39,7 @@ export default async function handler(req, res) {
           url = `${process.env.BASE_URL}/top-headlines?country=us&category=business&apiKey=${API_KEY}`;
           break;
         case "tesla":
-          url = `${process.env.BASE_URL}/everything?q=tesla&from=2025-03-23&sortBy=publishedAt&apiKey=${API_KEY}`;
+          url = `${process.env.BASE_URL}/everything?q=tesla&from=${lastMonth}&sortBy=publishedAt&apiKey=${API_KEY}`;
           break;
         case "apple":
           url = `${process.env.BASE_URL}/everything?q=apple&from=2025-03-31&to=2025-03-31&sortBy=popularity&apiKey=${API_KEY}`;
