@@ -1,20 +1,30 @@
-import setCorsHeaders from "../config/cors";
-
 export default async function handler(req, res) {
   // Set CORS headers using the helper function
-  if (setCorsHeaders(req, res)) return;
+  res.setHeader("Access-Control-Allow-Origin", "*"); // Change to your frontend domain if needed
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PUT, DELETE, OPTIONS"
+  );
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+
+  // Handle preflight OPTIONS request
+  if (req.method === "OPTIONS") {
+    res.status(200).end();
+    return true; // stop further execution in handler
+  }
 
   // Allow only GET requests
   if (req.method !== "GET") {
     return res.status(405).json({ error: "Method Not Allowed" });
   }
+
   const today = new Date();
-  const lastMonth = new Date(today.setMonth(today.getMonth() - 1))
+  const formattedTeslaFromDate = new Date(today.setMonth(today.getMonth() - 1))
     .toISOString()
     .split("T")[0];
-  const API_KEY =
-    process.env.NEWS_API_KEY;
-  const BASE_URL = process.env.BASE_URL ; // Default base URL
+  const API_KEY = process.env.NEWS_API_KEY;
+  const BASE_URL = process.env.BASE_URL; // Default base URL
   const { q = "" } = req.query;
 
   try {
@@ -36,7 +46,7 @@ export default async function handler(req, res) {
           url = `${BASE_URL}/top-headlines?country=us&category=business&apiKey=${API_KEY}`;
           break;
         case "tesla":
-          url = `${BASE_URL}/everything?q=tesla&from=${lastMonth}&sortBy=publishedAt&apiKey=${API_KEY}`;
+          url = `${BASE_URL}/everything?q=tesla&from=${formattedTeslaFromDate}&sortBy=publishedAt&apiKey=${API_KEY}`;
           break;
         case "apple":
           url = `${BASE_URL}/everything?q=apple&from=2025-03-31&to=2025-03-31&sortBy=popularity&apiKey=${API_KEY}`;
