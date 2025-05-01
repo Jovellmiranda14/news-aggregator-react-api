@@ -49,7 +49,10 @@ export default async function handler(req, res) {
           url = `${BASE_URL}/everything?q=tesla&from=${formattedTeslaFromDate}&sortBy=publishedAt&apiKey=${API_KEY}`;
           break;
         case "apple":
-          url = `${BASE_URL}/everything?q=apple&from=2025-03-31&to=2025-03-31&sortBy=popularity&apiKey=${API_KEY}`;
+          const yesterday = new Date();
+          yesterday.setDate(yesterday.getDate() - 1); // Subtract 1 day to get yesterday's date
+          const formattedYesterday = yesterday.toISOString().split("T")[0]; // Format as YYYY-MM-DD
+          url = `${BASE_URL}/everything?q=apple&from=${formattedYesterday}&to=${formattedYesterday}&sortBy=popularity&apiKey=${API_KEY}`;
           break;
         default:
           url = `${BASE_URL}/everything?q=${encodedTerm}&apiKey=${API_KEY}`;
