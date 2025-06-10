@@ -54,6 +54,9 @@ export default async function handler(req, res) {
         case "economics":
           url = `${BASE_URL}/everything?q=economics&apiKey=${API_KEY}`;
           break;
+        case "economics":
+          url = `${BASE_URL}/everything?q=academics&apiKey=${API_KEY}`;
+          break;
         case "apple":
           const yesterday = new Date();
           yesterday.setDate(yesterday.getDate() - 1);
@@ -80,3 +83,6 @@ export default async function handler(req, res) {
     res.status(500).json({ error: "Failed to fetch news articles" });
   }
 }
+  const res = await fetch(
+          `https://api.weatherapi.com/v1/current.json?key=20b60ce385d84b91a31124202251006&q=Philippines&aqi=no`
+        );
