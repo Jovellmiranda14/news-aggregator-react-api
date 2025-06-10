@@ -1,5 +1,5 @@
 export default async function handler(req, res) {
-  // Set CORS headers using the helper function
+  // Set CORS headers
   res.setHeader("Access-Control-Allow-Origin", "*"); // Change to your frontend domain if needed
   res.setHeader(
     "Access-Control-Allow-Methods",
@@ -48,8 +48,20 @@ export default async function handler(req, res) {
         case "tesla":
           url = `${BASE_URL}/everything?q=tesla&from=${formattedTeslaFromDate}&sortBy=publishedAt&apiKey=${API_KEY}`;
           break;
+        case "sports":
+          url = `${BASE_URL}/everything?q=sports&apiKey=${API_KEY}`;
+          break;
+        case "economics":
+          url = `${BASE_URL}/everything?q=economics&apiKey=${API_KEY}`;
+          break;
+        case "economics":
+          url = `${BASE_URL}/everything?q=academics&apiKey=${API_KEY}`;
+          break;
         case "apple":
-          url = `${BASE_URL}/everything?q=apple&from=2025-03-31&to=2025-03-31&sortBy=popularity&apiKey=${API_KEY}`;
+          const yesterday = new Date();
+          yesterday.setDate(yesterday.getDate() - 1);
+          const formattedYesterday = yesterday.toISOString().split("T")[0];
+          url = `${BASE_URL}/everything?q=apple&from=${formattedYesterday}&to=${formattedYesterday}&sortBy=popularity&apiKey=${API_KEY}`;
           break;
         default:
           url = `${BASE_URL}/everything?q=${encodedTerm}&apiKey=${API_KEY}`;
@@ -71,3 +83,6 @@ export default async function handler(req, res) {
     res.status(500).json({ error: "Failed to fetch news articles" });
   }
 }
+  const res = await fetch(
+          `https://api.weatherapi.com/v1/current.json?key=20b60ce385d84b91a31124202251006&q=Philippines&aqi=no`
+        );
