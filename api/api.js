@@ -1,5 +1,5 @@
 export default async function handler(req, res) {
-  // Set CORS headers using the helper function
+  // Set CORS headers
   res.setHeader("Access-Control-Allow-Origin", "*"); // Change to your frontend domain if needed
   res.setHeader(
     "Access-Control-Allow-Methods",
@@ -48,10 +48,16 @@ export default async function handler(req, res) {
         case "tesla":
           url = `${BASE_URL}/everything?q=tesla&from=${formattedTeslaFromDate}&sortBy=publishedAt&apiKey=${API_KEY}`;
           break;
+        case "sports":
+          url = `${BASE_URL}/everything?q=sports&apiKey=${API_KEY}`;
+          break;
+           case "economics":
+          url = `${BASE_URL}/everything?q=economics&apiKey=${API_KEY}`;
+          break;
         case "apple":
           const yesterday = new Date();
-          yesterday.setDate(yesterday.getDate() - 1); // Subtract 1 day to get yesterday's date
-          const formattedYesterday = yesterday.toISOString().split("T")[0]; // Format as YYYY-MM-DD
+          yesterday.setDate(yesterday.getDate() - 1);
+          const formattedYesterday = yesterday.toISOString().split("T")[0];
           url = `${BASE_URL}/everything?q=apple&from=${formattedYesterday}&to=${formattedYesterday}&sortBy=popularity&apiKey=${API_KEY}`;
           break;
         default:
