@@ -51,7 +51,7 @@ export default async function handler(req, res) {
         case "sports":
           url = `${BASE_URL}/everything?q=sports&apiKey=${API_KEY}`;
           break;
-           case "economics":
+        case "economics":
           url = `${BASE_URL}/everything?q=economics&apiKey=${API_KEY}`;
           break;
         case "apple":
