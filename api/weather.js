@@ -1,7 +1,10 @@
 export default async function handler(req, res) {
   // Set CORS headers
   res.setHeader("Access-Control-Allow-Origin", "*"); // Change to specific domain in production
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PUT, DELETE, OPTIONS"
+  );
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
   res.setHeader("Access-Control-Allow-Credentials", "true");
 
@@ -18,7 +21,9 @@ export default async function handler(req, res) {
 
   const WEATHER_API_KEY = process.env.WEATHER_API_KEY;
   if (!WEATHER_API_KEY) {
-    return res.status(500).json({ error: "Weather API key is not configured." });
+    return res
+      .status(500)
+      .json({ error: "Weather API key is not configured." });
   }
 
   // Get location from query or default to "Philippines"
@@ -26,11 +31,15 @@ export default async function handler(req, res) {
 
   try {
     const weatherResponse = await fetch(
-      `https://api.weatherapi.com/v1/current.json?key=${WEATHER_API_KEY}&q=${encodeURIComponent(location)}&aqi=no`
+      `https://api.weatherapi.com/v1/current.json?key=${WEATHER_API_KEY}&q=${encodeURIComponent(
+        location
+      )}&aqi=no`
     );
 
     if (!weatherResponse.ok) {
-      throw new Error(`Weather API responded with status ${weatherResponse.status}`);
+      throw new Error(
+        `Weather API responded with status ${weatherResponse.status}`
+      );
     }
 
     const weatherData = await weatherResponse.json();
