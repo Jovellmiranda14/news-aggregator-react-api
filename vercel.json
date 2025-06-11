@@ -20,7 +20,7 @@
       "dest": "api/weather.js"
     },
     {
-      "src": "/api/weather/(.*)",
+      "src": "/api/weather",
       "dest": "api/weather.js"
     }
   ]
