@@ -37,34 +37,34 @@ export default async function handler(req, res) {
         case "wallstreet":
         case "wsj":
         case "wall street journal":
-          url = `${BASE_URL}/everything?domains=wsj.com&apiKey=${API_KEY}`;
+          url = `${BASE_URL}/everything?domains=wsj.com&language=en&apiKey=${API_KEY}`;
           break;
         case "techcrunch":
-          url = `${BASE_URL}/top-headlines?sources=techcrunch&apiKey=${API_KEY}`;
+          url = `${BASE_URL}/top-headlines?sources=techcrunch&language=en&apiKey=${API_KEY}`;
           break;
         case "business":
-          url = `${BASE_URL}/top-headlines?country=us&category=business&apiKey=${API_KEY}`;
+          url = `${BASE_URL}/top-headlines?country=us&category=business&language=en&apiKey=${API_KEY}`;
           break;
         case "tesla":
-          url = `${BASE_URL}/everything?q=tesla&from=${formattedTeslaFromDate}&sortBy=publishedAt&apiKey=${API_KEY}`;
+          url = `${BASE_URL}/everything?q=tesla&from=${formattedTeslaFromDate}&sortBy=publishedAt&language=en&apiKey=${API_KEY}`;
           break;
         case "sports":
-          url = `${BASE_URL}/everything?q=sports&apiKey=${API_KEY}`;
+          url = `${BASE_URL}/everything?q=sports&language=en&apiKey=${API_KEY}`;
           break;
         case "economics":
-          url = `${BASE_URL}/everything?q=economics&apiKey=${API_KEY}`;
+          url = `${BASE_URL}/everything?q=economics&language=en&apiKey=${API_KEY}`;
           break;
-        case "economics":
-          url = `${BASE_URL}/everything?q=academics&apiKey=${API_KEY}`;
+        case "academics": // Fixed duplicated 'economics' case
+          url = `${BASE_URL}/everything?q=academics&language=en&apiKey=${API_KEY}`;
           break;
         case "apple":
           const yesterday = new Date();
           yesterday.setDate(yesterday.getDate() - 1);
           const formattedYesterday = yesterday.toISOString().split("T")[0];
-          url = `${BASE_URL}/everything?q=apple&from=${formattedYesterday}&to=${formattedYesterday}&sortBy=popularity&apiKey=${API_KEY}`;
+          url = `${BASE_URL}/everything?q=apple&from=${formattedYesterday}&to=${formattedYesterday}&sortBy=popularity&language=en&apiKey=${API_KEY}`;
           break;
         default:
-          url = `${BASE_URL}/everything?q=${encodedTerm}&apiKey=${API_KEY}`;
+          url = `${BASE_URL}/everything?q=${encodedTerm}&language=en&apiKey=${API_KEY}`;
           break;
       }
     }
@@ -83,6 +83,6 @@ export default async function handler(req, res) {
     res.status(500).json({ error: "Failed to fetch news articles" });
   }
 }
-  const res = await fetch(
-          `https://api.weatherapi.com/v1/current.json?key=20b60ce385d84b91a31124202251006&q=Philippines&aqi=no`
-        );
+const res = await fetch(
+  `https://api.weatherapi.com/v1/current.json?key=20b60ce385d84b91a31124202251006&q=Philippines&aqi=no`
+);
